@@ -1,0 +1,7 @@
+	public <type> <get>() {
+		return <field_name>;
+	}
+
+	public void <set>(<type> <field_name>) {
+		this.<field_name> = <field_name>;
+	}

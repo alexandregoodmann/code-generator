@@ -1,0 +1,17 @@
+package <package>.app.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import <package>.core.BaseModel;
+
+@Entity
+@Table(name = "<table_name>")
+public class <class_name> extends BaseModel {
+
+	<properties>
+
+    <getters_setters>
+
+}
