@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class Table {
 
+	private String schema;
 	private String name;
 	private String className;
 	private List<Field> fields = new ArrayList<Field>();
@@ -41,6 +42,14 @@ public class Table {
 
 	public void setFields(List<Field> fields) {
 		this.fields = fields;
+	}
+
+	public String getSchema() {
+		return schema;
+	}
+
+	public void setSchema(String schema) {
+		this.schema = schema;
 	}
 
 }

@@ -12,11 +12,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.goodmann.database.sqlite.SQLiteJDBC;
+import br.com.goodmann.database.sqlite.Types;
 import br.com.goodmann.generator.Field;
 import br.com.goodmann.generator.ModelTag;
 import br.com.goodmann.generator.Table;
-import br.com.goodmann.jdbc.SQLiteJDBC;
-import br.com.goodmann.jdbc.Types;
 import br.com.goodmann.util.FileUtil;
 import br.com.goodmann.util.StringUtil;
 

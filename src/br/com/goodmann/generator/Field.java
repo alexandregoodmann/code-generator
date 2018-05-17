@@ -5,7 +5,7 @@
  */
 package br.com.goodmann.generator;
 
-import br.com.goodmann.jdbc.Types;
+import br.com.goodmann.database.sqlite.Types;
 
 /**
  * @description
@@ -15,6 +15,7 @@ import br.com.goodmann.jdbc.Types;
 public class Field {
 
 	private String name;
+	private String postgreType;
 	private Types type;
 
 	public String getName() {
@@ -31,6 +32,14 @@ public class Field {
 
 	public void setType(Types type) {
 		this.type = type;
+	}
+
+	public String getPostgreType() {
+		return postgreType;
+	}
+
+	public void setPostgreType(String postgreType) {
+		this.postgreType = postgreType;
 	}
 
 }
