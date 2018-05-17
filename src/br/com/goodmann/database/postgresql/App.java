@@ -16,7 +16,7 @@ import br.com.goodmann.generator.Schema;
  * @author Ferreira
  * @date 17 de mai de 2018
  */
-public class AppPostGreSQL {
+public class App {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException {
 
