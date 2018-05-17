@@ -48,21 +48,21 @@ public class SQLiteJDBC {
 
 			// details of tables
 			Table table = new Table();
-			table.setName(rsTables.getString("TABLE_NAME").toUpperCase());
-			table.setClassName(StringUtil.formatClassName(rsTables.getString("TABLE_NAME")));
+			table.setTable(rsTables.getString("TABLE_NAME").toUpperCase());
+			//table.setClassName(StringUtil.formatClassName(rsTables.getString("TABLE_NAME")));
 			tables.add(table);
 
-			ResultSet rsColumns = connection.getMetaData().getColumns(null, this.schema, table.getName(), null);
+			/*ResultSet rsColumns = connection.getMetaData().getColumns(null, this.schema, table.getName(), null);
 			while (rsColumns.next()) {
 				String sfield = rsColumns.getString("COLUMN_NAME");
 				if (!ignoreFields.contains(sfield.toLowerCase())) {
 					Field field = new Field();
-					field.setName(StringUtil.formatFieldName(sfield));
+					field.setName(StringUtil.formatPropertieName(sfield));
 					field.setType(Types.valueOf(StringUtil.formatType(rsColumns.getString("TYPE_NAME"))));
 					table.getFields().add(field);
 				}
-			}
-			rsColumns.close();
+			}*/
+			//rsColumns.close();
 		}
 
 		rsTables.close();

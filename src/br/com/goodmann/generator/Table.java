@@ -1,7 +1,7 @@
 /**
  *
  * Ferreira
- * 8 de mai de 2018
+ * 17 de mai de 2018
  */
 package br.com.goodmann.generator;
 
@@ -11,45 +11,45 @@ import java.util.List;
 /**
  * @description
  * @author Ferreira
- * @date 8 de mai de 2018
+ * @date 17 de mai de 2018
  */
 public class Table {
 
-	private String schema;
-	private String name;
-	private String className;
-	private List<Field> fields = new ArrayList<Field>();
+	private String table;
+	private String clazz;
+	private String clazzTable;
+	private List<Field> properties = new ArrayList<Field>();
 
-	public String getClassName() {
-		return className;
+	public String getTable() {
+		return table;
 	}
 
-	public void setClassName(String className) {
-		this.className = className;
+	public void setTable(String table) {
+		this.table = table;
 	}
 
-	public String getName() {
-		return name;
+	public String getClazz() {
+		return clazz;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setClazz(String clazz) {
+		this.clazz = clazz;
 	}
 
-	public List<Field> getFields() {
-		return fields;
+	public List<Field> getProperties() {
+		return properties;
 	}
 
-	public void setFields(List<Field> fields) {
-		this.fields = fields;
+	public void setProperties(List<Field> properties) {
+		this.properties = properties;
 	}
 
-	public String getSchema() {
-		return schema;
+	public String getClazzTable() {
+		return clazzTable;
 	}
 
-	public void setSchema(String schema) {
-		this.schema = schema;
+	public void setClazzTable(String clazzTable) {
+		this.clazzTable = clazzTable;
 	}
 
 }

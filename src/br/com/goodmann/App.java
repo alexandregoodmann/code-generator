@@ -30,8 +30,8 @@ public class App {
 	private List<String> buildProperties(List<Field> fields) {
 		List<String> properties = new ArrayList<String>();
 		for (Field field : fields) {
-			properties.add("	@Column(name = \"" + field.getName() + "\")");
-			properties.add("	private " + Types.get(field.getType().toString()) + " " + field.getName() + ";");
+			//properties.add("	@Column(name = \"" + field.getName() + "\")");
+			//properties.add("	private " + Types.get(field.getType().toString()) + " " + field.getName() + ";");
 			properties.add("");
 		}
 		return properties;
@@ -42,12 +42,12 @@ public class App {
 		List<String> gettersSetters = new ArrayList<String>();
 		for (Field field : fields) {
 			for (String line : templateGetterSetters) {
-				String lin = line.replaceAll(ModelTag.TYPE.tag, field.getType().getType());
+/*				String lin = line.replaceAll(ModelTag.TYPE.tag, field.getType().getType());
 				lin = lin.replaceAll(ModelTag.GET.tag, "get" + StringUtil.upper(field.getName()));
 				lin = lin.replaceAll(ModelTag.SET.tag, "set" + StringUtil.upper(field.getName()));
 				lin = lin.replaceAll(ModelTag.FIELD_NAME.tag, field.getName());
 				gettersSetters.add(lin);
-			}
+*/			}
 		}
 		return gettersSetters;
 	}
@@ -101,13 +101,13 @@ public class App {
 		List<String> gettersSetters = fileUtil.readFile(gettersSettersTemplate);
 
 		for (Table table : tables) {
-			map.put(ModelTag.TABLE_NAME, table.getName());
+/*			map.put(ModelTag.TABLE_NAME, table.getName());
 			map.put(ModelTag.CLASS_NAME, table.getClassName());
 
 			List<String> modelLines = this.changeTags(map, model, table.getFields(), gettersSetters);
 
 			fileUtil.writeFile("D:\\minitube\\PRINTER_PROJECT\\printer-api\\printer-api\\src\\main\\java\\de\\minitube\\printerapi\\app\\model\\" + table.getClassName() + ".java", modelLines);
-		}
+*/		}
 
 	}
 

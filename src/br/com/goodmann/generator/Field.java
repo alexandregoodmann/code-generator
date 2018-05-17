@@ -1,45 +1,53 @@
 /**
  *
  * Ferreira
- * 8 de mai de 2018
+ * 17 de mai de 2018
  */
 package br.com.goodmann.generator;
-
-import br.com.goodmann.database.sqlite.Types;
 
 /**
  * @description
  * @author Ferreira
- * @date 8 de mai de 2018
+ * @date 17 de mai de 2018
  */
 public class Field {
 
-	private String name;
-	private String postgreType;
-	private Types type;
+	private String fieldType;
+	private String fieldName;
 
-	public String getName() {
-		return name;
+	private String javaType;
+	private String propertieName;
+
+	public String getFieldType() {
+		return fieldType;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFieldType(String fieldType) {
+		this.fieldType = fieldType;
 	}
 
-	public Types getType() {
-		return type;
+	public String getFieldName() {
+		return fieldName;
 	}
 
-	public void setType(Types type) {
-		this.type = type;
+	public void setFieldName(String fieldName) {
+		this.fieldName = fieldName;
 	}
 
-	public String getPostgreType() {
-		return postgreType;
+	public String getJavaType() {
+		return javaType;
 	}
 
-	public void setPostgreType(String postgreType) {
-		this.postgreType = postgreType;
+	public void setJavaType(String javaType) {
+		this.javaType = javaType;
+	}
+
+	public String getPropertieName() {
+		return propertieName;
+	}
+
+	public void setPropertieName(String propertieName) {
+		this.propertieName = propertieName;
 	}
 
 }

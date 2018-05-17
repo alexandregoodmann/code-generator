@@ -1,10 +1,10 @@
-package <package>.app.model;
+package <base_package>.app.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import <package>.core.BaseModel;
+import <base_package>.core.BaseModel;
 
 @Entity
 @Table(name = "<table_name>")

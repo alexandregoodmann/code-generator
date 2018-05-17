@@ -11,7 +11,7 @@ package br.com.goodmann.generator;
  * @date 8 de mai de 2018
  */
 public enum ModelTag {
-	PACKAGE("<package>"), TABLE_NAME("<table_name>"), CLASS_NAME("<class_name>"), PROPERTIES(
+	PACKAGE("<base_package>"), TABLE_NAME("<table_name>"), CLASS_NAME("<class_name>"), PROPERTIES(
 			"<properties>"), GETTERS_SETTERS(
 					"<getters_setters>"), FIELD_NAME("<field_name>"), TYPE("<type>"), SET("<set>"), GET("<get>");
 

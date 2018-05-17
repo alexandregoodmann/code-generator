@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import br.com.goodmann.generator.Field;
+import br.com.goodmann.generator.Schema;
 import br.com.goodmann.generator.Table;
 import br.com.goodmann.util.StringUtil;
 
@@ -36,9 +37,17 @@ public class PostgreSQLJDBC {
 		this.url = url;
 	}
 
-	public List<String> getSchemas(String[] ignoreSchema) {
+	/**
+	 * 
+	 * @param ignoreSchema
+	 *            - List of schemas to be ignored
+	 * @param basePackage
+	 *            - base package - com.comnay.model
+	 * @return
+	 */
+	public List<Schema> getSchemas(String[] ignoreSchema, String basePackage, String[] ignoreFields) {
 
-		List<String> list = new ArrayList<String>();
+		List<Schema> list = new ArrayList<Schema>();
 
 		try {
 			ResultSet set = this.connection.getMetaData().getSchemas();
@@ -46,7 +55,11 @@ public class PostgreSQLJDBC {
 				String schema = set.getString("TABLE_SCHEM");
 				List<String> ignore = Arrays.asList(ignoreSchema);
 				if (!ignore.contains(schema)) {
-					list.add(schema);
+					Schema schem = new Schema();
+					schem.setPackageName(basePackage);
+					schem.setSchema(schema);
+					schem.getTables().addAll(this.getTables(schema, ignoreFields));
+					list.add(schem);
 				}
 			}
 		} catch (Exception e) {
@@ -56,46 +69,40 @@ public class PostgreSQLJDBC {
 		return list;
 	}
 
-	public List<Table> getTables(List<String> schems, List<String> ignoreFields) {
-
+	private List<Table> getTables(String schem, String[] ignoreFields) throws SQLException {
 		List<Table> tables = new ArrayList<Table>();
-
-		try {
-			// create list of tables for each schema
-			for (String schem : schems) {
-				ResultSet rsTables = connection.getMetaData().getTables(null, schem, null, new String[] { "TABLE" });
-				while (rsTables.next()) {
-					String tableName = rsTables.getString("TABLE_NAME");
-					Table table = new Table();
-					table.setSchema(schem);
-					table.setName(tableName.toUpperCase());
-					table.setClassName(StringUtil.formatClassName(tableName));
-
-					// Get all field for each table
-					ResultSet rsColumns = connection.getMetaData().getColumns(null, schem, tableName, null);
-					while (rsColumns.next()) {
-						String sfield = rsColumns.getString("COLUMN_NAME");
-						if (!ignoreFields.contains(sfield.toLowerCase())) {
-							String typeName = rsColumns.getString("TYPE_NAME");
-							Field field = new Field();
-							field.setName(StringUtil.formatFieldName(sfield));
-							field.setPostgreType(this.types.getType(typeName));
-							table.getFields().add(field);
-						}
-					}
-					tables.add(table);
-					rsColumns.close();
-				}
-				rsTables.close();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		ResultSet rsTables = connection.getMetaData().getTables(null, schem, null, new String[] { "TABLE" });
+		while (rsTables.next()) {
+			String tableName = rsTables.getString("TABLE_NAME");
+			Table table = new Table();
+			table.setTable(tableName);
+			table.setClazzTable(tableName.toUpperCase());
+			table.setClazz(StringUtil.formatClassName(tableName));
+			table.getProperties().addAll(this.getFields(schem, tableName, ignoreFields));
+			tables.add(table);
 		}
-
 		return tables;
 	}
 
-	private void connect() {
+	private List<Field> getFields(String schem, String tableName, String[] ignoreFields) throws SQLException {
+		List<Field> list = new ArrayList<Field>();
+		ResultSet rsColumns = connection.getMetaData().getColumns(null, schem, tableName, null);
+		while (rsColumns.next()) {
+			String fieldName = rsColumns.getString("COLUMN_NAME");
+			String fieldType = rsColumns.getString("TYPE_NAME");
+			if (!Arrays.asList(ignoreFields).contains(fieldName)) {
+				Field f = new Field();
+				f.setFieldName(fieldName);
+				f.setFieldType(fieldType);
+				f.setJavaType(this.types.getType(fieldType));
+				f.setPropertieName(StringUtil.formatPropertieName(fieldName));
+				list.add(f);
+			}
+		}
+		return list;
+	}
+
+	public void connect() {
 		try {
 			Class.forName("org.postgresql.Driver");
 			this.connection = (Connection) DriverManager.getConnection(this.url, this.user, this.password);
@@ -107,7 +114,7 @@ public class PostgreSQLJDBC {
 		}
 	}
 
-	private void disConnect() {
+	public void disConnect() {
 		try {
 			this.connection.close();
 		} catch (Exception e) {
@@ -115,26 +122,4 @@ public class PostgreSQLJDBC {
 		}
 	}
 
-	public static void main(String[] args) {
-
-		String user = "postgres";
-		String password = "admin";
-		String url = "jdbc:postgresql://localhost:5432/LabVision_V0.36";
-		String[] ignoreSchema = { "public", "pg_catalog", "information_schema" };
-		String[] ignoreFields = { "id", "creation_time", "modification_time", "version" };
-
-		PostgreSQLJDBC post = new PostgreSQLJDBC(user, password, url);
-
-		post.connect();
-
-		List<String> schems = post.getSchemas(ignoreSchema);
-		List<Table> tables = post.getTables(schems, Arrays.asList(ignoreFields));
-		for (Table t : tables) {
-			for (Field f : t.getFields()) {
-				System.out.println("--->>>" + t.getSchema() + "--->>" + t.getName() + "--->" + f.getName());
-			}
-		}
-
-		post.disConnect();
-	}
 }
