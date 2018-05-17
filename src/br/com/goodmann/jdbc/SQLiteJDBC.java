@@ -23,20 +23,20 @@ import br.com.goodmann.util.StringUtil;
  */
 public class SQLiteJDBC {
 
-	public SQLiteJDBC(String databaseFile, String schema) {
-		this.databaseFile = databaseFile;
+	public SQLiteJDBC(String url, String schema) {
+		this.url = url;
 		this.schema = schema;
 	}
 
 	/// workspace/code-generator/resources/printer.db
-	private String databaseFile;
+	private String url;
 
 	private String schema;
 
 	public List<Table> getTables(List<String> ignoreFields) throws ClassNotFoundException, SQLException {
 
 		Class.forName("org.sqlite.JDBC");
-		Connection connection = DriverManager.getConnection("jdbc:sqlite:" + this.databaseFile);
+		Connection connection = DriverManager.getConnection(this.url);
 
 		List<Table> tables = new ArrayList<Table>();
 

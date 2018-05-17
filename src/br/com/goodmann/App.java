@@ -76,7 +76,7 @@ public class App {
 	private void writeModel() throws ClassNotFoundException, SQLException, IOException {
 
 		// input
-		String dbFile = "/workspace/code-generator/resources/printer.db";
+		String url = "jdbc:sqlite:/minitube/PRINTER_PROJECT/printer-api/printer-api/src/main/resources/printer.db";
 		String schema = "main";
 		String modelTemplate = "D:\\workspace\\code-generator\\resources\\template\\model.template";
 		String gettersSettersTemplate = "D:\\workspace\\code-generator\\resources\\template\\getters_setters.template";
@@ -88,7 +88,7 @@ public class App {
 		ignoreFields.add("version");
 
 		// read tables from database
-		SQLiteJDBC jdbc = new SQLiteJDBC(dbFile, schema);
+		SQLiteJDBC jdbc = new SQLiteJDBC(url, schema);
 		List<Table> tables = jdbc.getTables(ignoreFields);
 
 		// read model template and write class
@@ -106,7 +106,7 @@ public class App {
 
 			List<String> modelLines = this.changeTags(map, model, table.getFields(), gettersSetters);
 
-			fileUtil.writeFile("D://minitube//classes//" + table.getClassName() + ".java", modelLines);
+			fileUtil.writeFile("D:\\minitube\\PRINTER_PROJECT\\printer-api\\printer-api\\src\\main\\java\\de\\minitube\\printerapi\\app\\model\\" + table.getClassName() + ".java", modelLines);
 		}
 
 	}
@@ -114,6 +114,7 @@ public class App {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException {
 		App app = new App();
 		app.writeModel();
+		System.out.println("--FEITO--");
 	}
 
 }

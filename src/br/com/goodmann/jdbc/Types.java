@@ -16,7 +16,7 @@ import java.util.Map;
 public enum Types {
 
 	INTEGER("Integer"), VARCHAR("String"), DATETIME("Date"), INT("Integer"), TEXT("String"), CHAR("String"), BOOLEAN(
-			"Boolean");
+			"Boolean"), BLOB("String"), DOUBLE("Double");
 
 	private String type;
 
